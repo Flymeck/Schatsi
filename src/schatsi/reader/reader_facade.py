@@ -6,6 +6,7 @@ from typing import Union
 from schatsi.models.document import Document
 from schatsi.reader.base_reader import BaseReader
 from schatsi.reader.pdf_reader import PdfReader
+from schatsi.reader.docx_reader import DocxReader
 
 from schatsi.reader.reader_type import ReaderType
 
@@ -20,7 +21,8 @@ class ReaderFacade:
         _type_: _description_
     """
     reader = {
-        ReaderType.PDF: PdfReader()
+        ReaderType.PDF: PdfReader(),
+        ReaderType.DOCX: DocxReader()
     }
     
     def __init__(self) -> None:
@@ -32,6 +34,8 @@ class ReaderFacade:
         file_type = Path(file_path).suffix
         if file_type.lower() == ".pdf":
             return ReaderType.PDF
+        elif file_type.lower() == "docx.":
+            return ReaderType.DOCX
         else:
             logger.warning(f"Unknown file type {file_type} found.")
             return None
